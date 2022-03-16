@@ -18,14 +18,6 @@ switch para.X_sgldist_name
         k = numel(prob_discrete);
         
         
-%         deri_pdfx = 0;
-%         for i=1:k
-%             deri_pdfx = deri_pdfx + sparsity * prob_discrete(i) * normpdf(x, beta_discrete(i), sigma_H) .* (- (x - beta_discrete(i)) / sigma_H^2 );
-%         end
-%         deri_pdfx = deri_pdfx + (1 - sparsity) * normpdf(x, 0, sigma_H) .* (- x / sigma_H^2 );
-%         pdfx = pdf_of_X(x, para);
-%         condx = x + sigma_H^2 * deri_pdfx ./ pdfx;
-        
         sum_1 = zeros(size(x));
         for i=1:k
             sum_1 = sum_1 + prob_discrete(i) * exp(- (beta_discrete(i)^2 - 2*beta_discrete(i)*x) / (2*sigma_H^2) );
@@ -46,9 +38,7 @@ switch para.X_sgldist_name
             else
                 condx = condx + prob_discrete(i) * beta_discrete(i) * ( (1-sparsity) * exp(( (beta_discrete(i)^2)  - 2*(beta_discrete(i)) * x) / (2*sigma_H^2) ) + sparsity*sum_2).^-1;
             end
-            
-            %condx1 = condx1 + prob_discrete(i) * beta_discrete(i) ./ ( exp(( (beta_discrete(i)^2)  - 2*(beta_discrete(i)) * x) / (2*sigma_H^2) ) .* ( (1-sparsity) + sparsity * sum_1  ));
-        end
+         end
         condx = condx * sparsity;
     case 'uniform'
         sigma_H = para.sigma_H;

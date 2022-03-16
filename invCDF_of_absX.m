@@ -3,7 +3,6 @@ function x_ary = invCDF_of_absX(CDF_ary, pdf_absX_func)
 % pdf_absX_func: pdf of the positive distribution
 % CDF_ary: input CDFs
 % x_ary: output quantiles
-
 x_ary = zeros(size(CDF_ary));
 for i=1:numel(CDF_ary)
     if CDF_ary(i) == 1
